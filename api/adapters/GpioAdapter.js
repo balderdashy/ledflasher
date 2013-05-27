@@ -17,7 +17,6 @@ var adapter = {
 
 };
 
-_.bindAll(adapter);
 module.exports = adapter;
 
 var gpio = require('pi-gpio');
@@ -25,7 +24,7 @@ var gpio = require('pi-gpio');
 // When the process exits, unexport all the pins in the GPIO
 process.on('exit', function() {
 	console.log('Unexporting all live pins...');
-	for (var pin in service.pins) {
+	for (var pin in adapter.pins) {
 		gpio.close(pin);
 	}
 });
@@ -44,12 +43,12 @@ function output (pinId, value, cb) {
 function readyForOutput (pinId, cb) {
 
 	// Pin already live
-	if (service.pins[pinId] === 'output') {
+	if (adapter.pins[pinId] === 'output') {
 		cb();
 	}
 	else {
 		// Calling export with a pin number will export that header and return a gpio header instance
-		service.pins[pinId] = 'output';
+		adapter.pins[pinId] = 'output';
 		gpio.open(pinId, 'output', cb);
 	}
 }
