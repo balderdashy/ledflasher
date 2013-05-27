@@ -24,7 +24,7 @@ socket.on('message', function (message) {
 	try {
 		console.log('Received message: ', message);
 		
-		var pin = message.data.pin;
+		var pin = message.data.id;
 		var state = message.data.state;
 
 		output(pin, state, function () {
