@@ -19,7 +19,10 @@ var adapter = {
 
 		output(pinId, value, function () {
 			console.log(arguments);
-			cb();
+			cb(null, {
+				id: pinId,
+				state: value
+			});
 		});
 	}
 
@@ -43,7 +46,10 @@ function output (pinId, value, cb) {
 		console.log('Setting pin #'+pinId+' to '+ value + '...');
 		gpio.write(pinId, value, function () {
 			console.log('Pin set.');
-			cb && cb();
+			cb && cb(null, {
+				id: pinId,
+				state: value
+			});
 		});
 	});
 }
