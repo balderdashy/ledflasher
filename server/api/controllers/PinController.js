@@ -5,6 +5,5 @@
 var PinController = {
 
 
-
 };
 module.exports = PinController;
