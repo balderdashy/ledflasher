@@ -11,8 +11,16 @@ var adapter = {
 		cb();
 	},
 
-	update: function (collectionName, pinId, value, cb) {
-		output(pinId, value, cb);
+	update: function (collectionName, criteria, value, cb) {
+		console.log(arguments);
+
+		var pinId = criteria.where.id;
+		value = value.state || 0;
+
+		output(pinId, value, function () {
+			console.log(arguments);
+			cb();
+		});
 	}
 
 };
@@ -33,7 +41,7 @@ process.on('exit', function() {
 function output (pinId, value, cb) {
 	readyForOutput(pinId, function (err, pin) {
 		console.log('Setting pin #'+pinId+' to '+ value + '...');
-		gpio.write(id, value, function () {
+		gpio.write(pinId, value, function () {
 			console.log('Pin set.');
 			cb && cb();
 		});
