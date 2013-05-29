@@ -1,2 +1,45 @@
-<a href="" class="btn btn-success" >Turn On the Light!</a>
-<a href="" class="btn btn-danger" >Turn Off the Light!</a>
+<div class="navbar navbar-inverse navbar-fixed-bottom">
+	<div class="navbar-inner">  
+		<div class="container">
+			<a class="brand" href="./">HouseMate</a>
+			<div class="nav-collapse collapse">
+				<ul class="nav">
+					<li class=""><a href="./">Home</a></li>
+				</ul>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="row">
+	<div class="span3">
+		<ul class="nav nav-list bs-docs-sidenav affix">
+		  <li class="active"><a href="#global"><i class="icon-chevron-right"></i> Global styles</a></li>
+		  <li class=""><a href="#gridSystem"><i class="icon-chevron-right"></i> Grid system</a></li>
+		  <li class=""><a href="#fluidGridSystem"><i class="icon-chevron-right"></i> Fluid grid system</a></li>
+		  <li class=""><a href="#layouts"><i class="icon-chevron-right"></i> Layouts</a></li>
+		  <li class=""><a href="#responsive"><i class="icon-chevron-right"></i> Responsive design</a></li>
+		</ul>
+	</div>
+	<div class="span9 text-center">
+		<h1>Lets Control a Light!</h1>
+		<button sref="/pin/update" value="1" class="btn btn-block btn-large btn-success"><i class="icon-off"></i></button>
+		<button sref="/pin/update" value="0" class="btn btn-block btn-large btn-danger"><i class="icon-off"></i></button>
+	</div>
+</div>
+
+
+<script type="text/javascript">
+	var socket = io.connect();
+
+	jQuery(document).ready(function($) {
+		$('.btn').click(function(event){
+			event.preventDefault();
+			this.href = $(this).attr('sref')+'/12';
+			this.value = $(this).attr('value');
+			socket.request(this.href,{ id: 12, state: this.value },function(err){
+				if (err) console.log(err);
+			});
+		});
+	});;
+</script>
